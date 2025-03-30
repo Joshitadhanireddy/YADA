@@ -1046,8 +1046,8 @@ private:
         std::cout << "3. Manage Profile\n";
         std::cout << "4. Select Date\n";
         std::cout << "5. Undo Last Action\n";
-        std::cout << "6. Save Data\n";
-        std::cout << "7. Exit\n";
+        // std::cout << "6. Save Data\n";
+        std::cout << "6. Exit\n";
         std::cout << "Enter choice: ";
     }
     
@@ -1161,6 +1161,7 @@ private:
         
         auto food = std::make_shared<BasicFood>(identifier, keywords, calories);
         if (foodDb->addFood(food)) {
+            saveData();
             std::cout << "Basic food added successfully.\n";
         } else {
             std::cout << "Failed to add food.\n";
@@ -1233,6 +1234,7 @@ private:
         
         auto food = std::make_shared<CompositeFood>(identifier, keywords, components);
         if (foodDb->addFood(food)) {
+            saveData();
             std::cout << "Composite food created successfully.\n";
         } else {
             std::cout << "Failed to create composite food.\n";
@@ -1286,9 +1288,9 @@ private:
             std::istringstream iss(keywordsStr);
             std::string keyword;
             while (std::getline(iss, keyword, ',')) {
-                // Trim whitespace
                 keyword.erase(0, keyword.find_first_not_of(" \t"));
                 keyword.erase(keyword.find_last_not_of(" \t") + 1);
+                std::transform(keyword.begin(), keyword.end(), keyword.begin(), ::tolower);
                 if (!keyword.empty()) {
                     keywords.push_back(keyword);
                 }
@@ -1314,7 +1316,7 @@ private:
         std::cout << "\nAvailable Foods:\n";
         for (size_t i = 0; i < foods.size(); ++i) {
             std::cout << i + 1 << ". " << foods[i]->getIdentifier() << " (" 
-                      << foods[i]->getCaloriesPerServing() << " calories per serving)\n";
+                    << foods[i]->getCaloriesPerServing() << " calories per serving)\n";
         }
         
         int foodIndex;
@@ -1334,8 +1336,10 @@ private:
         
         auto command = std::make_shared<AddFoodCommand>(log, foods[foodIndex - 1], servings);
         undoManager.executeCommand(command);
+        saveData();
         std::cout << "Food added to log.\n";
     }
+
     
     void removeFoodFromLog() {
         std::cout << "\n===== Remove Food from Log =====\n";
@@ -1363,6 +1367,7 @@ private:
         
         auto command = std::make_shared<RemoveFoodCommand>(log, entryIndex - 1);
         undoManager.executeCommand(command);
+        saveData();
         std::cout << "Entry removed from log.\n";
     }
     
@@ -1434,7 +1439,9 @@ private:
         std::cin >> age;
         std::cin.ignore();
         profile.setAge(age);
-        
+
+        saveData();
+
         std::cout << "Basic information updated.\n";
     }
     
@@ -1449,6 +1456,9 @@ private:
         std::cin.ignore();
         
         profile.setWeight(log.getCurrentDate(), weight);
+
+        saveData();
+
         std::cout << "Weight updated.\n";
     }
     
@@ -1472,6 +1482,9 @@ private:
         
         ActivityLevel level = static_cast<ActivityLevel>(choice - 1);
         profile.setActivityLevel(log.getCurrentDate(), level);
+
+        saveData();
+
         std::cout << "Activity level updated.\n";
     }
     
@@ -1487,9 +1500,11 @@ private:
         
         if (choice == 1) {
             profile.setCalculator(std::make_shared<HarrisBenedictCalculator>());
+            saveData();
             std::cout << "Calculator changed to Harris-Benedict Equation.\n";
         } else if (choice == 2) {
             profile.setCalculator(std::make_shared<MifflinStJeorCalculator>());
+            saveData();
             std::cout << "Calculator changed to Mifflin-St Jeor Equation.\n";
         } else {
             std::cout << "Invalid choice.\n";
@@ -1607,8 +1622,8 @@ public:
                         std::cout << "Nothing to undo.\n";
                     }
                     break;
-                case 6: saveData(); break;
-                case 7: 
+                // case 6: saveData(); break;
+                case 6: 
                     running = false;
                     saveData();
                     std::cout << "Thank you for using YADA. Goodbye!\n";

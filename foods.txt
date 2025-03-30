@@ -4,7 +4,9 @@ BASIC;Banana;fruit,banana,fresh;105
 COMPOSITE;BasicSalad;salad,vegetable,healthy;Lettuce:2,Tomato:1,OliveOil:0.5
 BASIC;Cheddar;cheese,dairy;113
 BASIC;ChickenBreast;meat,chicken,protein;165
+BASIC;Chocolate;sweet,diary;20
 BASIC;Egg;protein,breakfast;78
+BASIC;French Fries;fried,potato;50
 BASIC;Jelly;spread,fruit,sweet;56
 BASIC;Juice;fruit,liquid,fresh;200
 BASIC;Lettuce;vegetable,salad,green;5
@@ -14,6 +16,7 @@ COMPOSITE;PBJSandwich;sandwich,lunch,peanut butter,jelly;PBSandwich:1,Jelly:1
 COMPOSITE;PBSandwich;sandwich,lunch,peanut butter;WhiteBread:2,PeanutButter:2
 BASIC;Pasta;grain,carb,italian;220
 BASIC;PeanutButter;spread,nut,protein;94
+BASIC;Prawns;meat,protein,seafood;500
 BASIC;Rice;grain,carb;200
 BASIC;Salmon;fish,protein,omega;206
 BASIC;Tomato;vegetable,salad;22
