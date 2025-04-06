@@ -11,6 +11,7 @@
 #include <algorithm>
 #include <ctime>
 #include <stack>
+#include <limits>
 
 // Forward declarations
 class Food;
@@ -1062,9 +1063,12 @@ private:
             std::cout << "Enter choice: ";
             
             int choice;
-            std::cin >> choice;
-            std::cin.ignore();
-            
+            if (!(std::cin >> choice)) {
+                std::cin.clear();
+                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); 
+                std::cout << "Invalid input. Please enter a number.\n";
+                continue;
+            }
             switch (choice) {
                 case 1: viewAllFoods(); break;
                 case 2: searchFoods(); break;

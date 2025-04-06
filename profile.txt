@@ -1,3 +1,1 @@
-Male;180;21;Harris-Benedict Equation
-2025-03-29:62
-2025-03-29:2
+Male;180;21;Harris-Benedict 0 0 0 1.2
