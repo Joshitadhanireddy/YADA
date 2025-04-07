@@ -9,14 +9,12 @@
 #include <fstream>
 #include <sstream>
 
-// FoodDatabase class - Singleton pattern
 class FoodDatabase {
 private:
     static FoodDatabase* instance;
     std::map<std::string, std::shared_ptr<Food>> foods;
     std::string databaseFile;
     
-    // Private constructor for singleton
     FoodDatabase();
     
 public:
@@ -25,6 +23,7 @@ public:
     
     void setDatabaseFile(const std::string& file);
     bool addFood(std::shared_ptr<Food> food);
+    bool removeFood(const std::string& id);
     std::shared_ptr<Food> getFood(const std::string& id);
     std::vector<std::shared_ptr<Food>> findFoods(const std::vector<std::string>& keywords, bool matchAll);
     std::vector<std::shared_ptr<Food>> getAllFoods();

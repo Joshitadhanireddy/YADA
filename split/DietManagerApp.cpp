@@ -38,7 +38,10 @@ void DietManagerApp::run() {
                     std::cout << "Nothing to undo.\n";
                 }
                 break;
-            case 6: 
+            case 6:
+                saveData();
+                break;
+            case 7: 
                 running = false;
                 saveData();
                 std::cout << "Thank you for using YADA. Goodbye!\n";
@@ -56,7 +59,8 @@ void DietManagerApp::displayMainMenu() {
     std::cout << "3. Manage Profile\n";
     std::cout << "4. Select Date\n";
     std::cout << "5. Undo Last Action\n";
-    std::cout << "6. Exit\n";
+    std::cout << "6. Save Data\n";
+    std::cout << "7. Exit\n";
     std::cout << "Enter choice: ";
 }
 
@@ -173,8 +177,10 @@ void DietManagerApp::addBasicFood() {
     std::cin.ignore();
     
     auto food = std::make_shared<BasicFood>(identifier, keywords, calories);
-    if (foodDb->addFood(food)) {
-        saveData();
+    auto command = std::make_shared<AddFoodToDbCommand>(foodDb, food);
+    // undoManager.executeCommand(command);
+    if (undoManager.executeCommand(command)) {
+        // saveData();
         std::cout << "Basic food added successfully.\n";
     } else {
         std::cout << "Failed to add food.\n";
@@ -246,8 +252,10 @@ void DietManagerApp::createCompositeFood() {
     }
     
     auto food = std::make_shared<CompositeFood>(identifier, keywords, components);
-    if (foodDb->addFood(food)) {
-        saveData();
+    auto command = std::make_shared<AddFoodToDbCommand>(foodDb, food);
+    // undoManager.executeCommand(command);
+    if (undoManager.executeCommand(command)) {
+        // saveData();
         std::cout << "Composite food created successfully.\n";
     } else {
         std::cout << "Failed to create composite food.\n";
@@ -349,7 +357,7 @@ void DietManagerApp::addFoodToLog() {
     
     auto command = std::make_shared<AddFoodCommand>(log, foods[foodIndex - 1], servings);
     undoManager.executeCommand(command);
-    saveData();
+    // saveData();
     std::cout << "Food added to log.\n";
 }
 
@@ -379,7 +387,7 @@ void DietManagerApp::removeFoodFromLog() {
     
     auto command = std::make_shared<RemoveFoodCommand>(log, entryIndex - 1);
     undoManager.executeCommand(command);
-    saveData();
+    // saveData();
     std::cout << "Entry removed from log.\n";
 }
 
@@ -452,7 +460,7 @@ void DietManagerApp::editBasicInfo() {
     std::cin.ignore();
     profile.setAge(age);
 
-    saveData();
+    // saveData();
 
     std::cout << "Basic information updated.\n";
 }
@@ -469,7 +477,7 @@ void DietManagerApp::updateWeight() {
     
     profile.setWeight(log.getCurrentDate(), weight);
 
-    saveData();
+    // saveData();
 
     std::cout << "Weight updated.\n";
 }
@@ -495,7 +503,7 @@ void DietManagerApp::updateActivityLevel() {
     ActivityLevel level = static_cast<ActivityLevel>(choice - 1);
     profile.setActivityLevel(log.getCurrentDate(), level);
 
-    saveData();
+    // saveData();
 
     std::cout << "Activity level updated.\n";
 }
@@ -512,11 +520,11 @@ void DietManagerApp::changeCalculator() {
     
     if (choice == 1) {
         profile.setCalculator(std::make_shared<HarrisBenedictCalculator>());
-        saveData();
+        // saveData();
         std::cout << "Calculator changed to Harris-Benedict Equation.\n";
     } else if (choice == 2) {
         profile.setCalculator(std::make_shared<MifflinStJeorCalculator>());
-        saveData();
+        // saveData();
         std::cout << "Calculator changed to Mifflin-St Jeor Equation.\n";
     } else {
         std::cout << "Invalid choice.\n";

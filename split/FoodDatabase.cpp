@@ -130,6 +130,14 @@ bool FoodDatabase::loadDatabase() {
     file.close();
     return true;
 }
+bool FoodDatabase::removeFood(const std::string& id) {
+    auto it = foods.find(id);
+    if (it != foods.end()) {
+        foods.erase(it);
+        return true;
+    }
+    return false;
+}
 
 bool FoodDatabase::saveDatabase() {
     std::ofstream file(databaseFile);

@@ -8,7 +8,7 @@
 #include <stack>
 #include <vector>
 #include <algorithm>
-
+#include "FoodDatabase.hpp"
 // Command pattern for undo functionality
 class Command {
 public:
@@ -62,14 +62,24 @@ public:
     void undo() override;
     std::string toString() const override;
 };
-
+class AddFoodToDbCommand : public Command {
+    private:
+        FoodDatabase* foodDb; 
+        std::shared_ptr<Food> food;
+        
+    public:
+        AddFoodToDbCommand(FoodDatabase* db, std::shared_ptr<Food> f);
+        void execute() override;
+        void undo() override;
+        std::string toString() const override;
+    };
 // UndoManager class
 class UndoManager {
 private:
     std::stack<std::shared_ptr<Command>> undoStack;
     
 public:
-    void executeCommand(std::shared_ptr<Command> command);
+    bool executeCommand(std::shared_ptr<Command> command);
     bool canUndo() const;
     void undo();
     std::vector<std::string> getCommandHistory() const;

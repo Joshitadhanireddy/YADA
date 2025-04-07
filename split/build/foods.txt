@@ -24,3 +24,6 @@ BASIC;Tomato;vegetable,salad;22
 BASIC;WheatBread;bread,grain,wheat,whole;65
 BASIC;WhiteBread;bread,grain,wheat;75
 BASIC;Yogurt;dairy,protein,breakfast;59
+BASIC;kunafa;sweet,dessert;200
+BASIC;pea;vegetable,healthy;3
+BASIC;peanuts;nuts,bland;1

@@ -64,9 +64,11 @@ std::string ChangeDateCommand::toString() const {
 }
 
 // UndoManager implementation
-void UndoManager::executeCommand(std::shared_ptr<Command> command) {
+bool UndoManager::executeCommand(std::shared_ptr<Command> command) {
     command->execute();
     undoStack.push(command);
+    std::cout << "Command executed: " << command->toString() << "\n";
+    return true;
 }
 
 bool UndoManager::canUndo() const {
@@ -97,4 +99,20 @@ void UndoManager::clearHistory() {
     while (!undoStack.empty()) {
         undoStack.pop();
     }
+}
+AddFoodToDbCommand::AddFoodToDbCommand(FoodDatabase* db, std::shared_ptr<Food> f)
+    : foodDb(db), food(f) {}
+
+void AddFoodToDbCommand::execute() {
+    foodDb->addFood(food);
+}
+
+void AddFoodToDbCommand::undo() {
+    foodDb->removeFood(food->getIdentifier());
+}
+
+std::string AddFoodToDbCommand::toString() const {
+    std::stringstream ss;
+    ss << "Add food '" << food->getIdentifier() << "' to database";
+    return ss.str();
 }
