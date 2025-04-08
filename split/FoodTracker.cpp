@@ -10,9 +10,11 @@ FoodTracker::~FoodTracker() {
     profile.removeObserver(this);
 }
 
-void FoodTracker::update() {
-    // This method is called when either log or profile changes
-    displayDailySummary();
+void FoodTracker::update(Subject* subject) {
+
+    if(subject!=&profile){
+        displayDailySummary();
+    }
 }
 
 void FoodTracker::displayDailySummary() const {

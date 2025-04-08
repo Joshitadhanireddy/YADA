@@ -10,6 +10,6 @@ void Subject::removeObserver(Observer* observer) {
 
 void Subject::notifyObservers() {
     for (Observer* observer : observers) {
-        observer->update();
+        observer->update(this);
     }
 }

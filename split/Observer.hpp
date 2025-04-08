@@ -4,11 +4,11 @@
 #include <vector>
 #include <algorithm>
 
-// Observer pattern for updates
+class Subject;
 class Observer {
 public:
     virtual ~Observer() = default;
-    virtual void update() = 0;
+    virtual void update(Subject* subject = nullptr) = 0;
 };
 
 class Subject {

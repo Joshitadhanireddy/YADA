@@ -17,7 +17,7 @@ public:
     FoodTracker(DailyLog& l, DietProfile& p);
     ~FoodTracker();
     
-    void update() override;
+    void update(Subject* subject = nullptr) override;
     void displayDailySummary() const;
 };
 
