@@ -13,6 +13,7 @@ void DietManagerApp::init() {
     profile.loadProfile();
     
     std::cout << "Welcome to YADA (Yet Another Diet Assistant)!\n";
+    tracker.displayDailySummary();
 }
 
 void DietManagerApp::run() {
@@ -447,20 +448,21 @@ void DietManagerApp::editBasicInfo() {
     std::cout << "Select Gender (1: Male, 2: Female): ";
     std::cin >> genderChoice;
     Gender gender = (genderChoice == 2) ? Gender::Female : Gender::Male;
-    profile.setGender(gender);
+    auto genderCommand = std::make_shared<SetGenderCommand>(profile, gender);
+    undoManager.executeCommand(genderCommand);
     
     double height;
     std::cout << "Enter Height (cm): ";
     std::cin >> height;
-    profile.setHeight(height);
+    auto heightCommand = std::make_shared<SetHeightCommand>(profile, height);
+    undoManager.executeCommand(heightCommand);
     
     int age;
     std::cout << "Enter Age: ";
     std::cin >> age;
     std::cin.ignore();
-    profile.setAge(age);
-
-    // saveData();
+    auto ageCommand = std::make_shared<SetAgeCommand>(profile, age);
+    undoManager.executeCommand(ageCommand);
 
     std::cout << "Basic information updated.\n";
 }
@@ -475,7 +477,8 @@ void DietManagerApp::updateWeight() {
     std::cin >> weight;
     std::cin.ignore();
     
-    profile.setWeight(log.getCurrentDate(), weight);
+    auto command = std::make_shared<SetWeightCommand>(profile, log.getCurrentDate(), weight);
+    undoManager.executeCommand(command);
 
     // saveData();
 
@@ -501,7 +504,8 @@ void DietManagerApp::updateActivityLevel() {
     }
     
     ActivityLevel level = static_cast<ActivityLevel>(choice - 1);
-    profile.setActivityLevel(log.getCurrentDate(), level);
+    auto command = std::make_shared<SetActivityLevelCommand>(profile, log.getCurrentDate(), level);
+    undoManager.executeCommand(command);
 
     // saveData();
 
@@ -519,11 +523,15 @@ void DietManagerApp::changeCalculator() {
     std::cin.ignore();
     
     if (choice == 1) {
-        profile.setCalculator(std::make_shared<HarrisBenedictCalculator>());
+        auto calculatorPtr = std::make_shared<HarrisBenedictCalculator>();
+        auto command = std::make_shared<SetCalculatorCommand>(profile, calculatorPtr);
+        undoManager.executeCommand(command);
         // saveData();
         std::cout << "Calculator changed to Harris-Benedict Equation.\n";
     } else if (choice == 2) {
-        profile.setCalculator(std::make_shared<MifflinStJeorCalculator>());
+        auto calculatorPtr = std::make_shared<MifflinStJeorCalculator>();
+        auto command = std::make_shared<SetCalculatorCommand>(profile, calculatorPtr);
+        undoManager.executeCommand(command);
         // saveData();
         std::cout << "Calculator changed to Mifflin-St Jeor Equation.\n";
     } else {

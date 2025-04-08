@@ -383,7 +383,10 @@ CMakeFiles/diet_assistant.dir/Command.cpp.o: ../Command.cpp \
   /usr/include/c++/11/bits/stl_deque.h \
   /usr/include/c++/11/bits/deque.tcc \
   /usr/include/c++/11/bits/stl_stack.h \
-  ../FoodDatabase.hpp
+  ../FoodDatabase.hpp \
+  ../DietProfile.hpp \
+  ../common.hpp \
+  ../Calculator.hpp
 
 CMakeFiles/diet_assistant.dir/DailyLog.cpp.o: ../DailyLog.cpp \
   /usr/include/stdc-predef.h \
@@ -2115,11 +2118,11 @@ CMakeFiles/diet_assistant.dir/main.cpp.o: ../main.cpp \
 
 ../FoodTracker.hpp:
 
-../DietProfile.hpp:
-
 ../DietManagerApp.cpp:
 
 ../DailyLog.cpp:
+
+../DietProfile.hpp:
 
 /usr/include/c++/11/bits/locale_facets_nonio.h:
 

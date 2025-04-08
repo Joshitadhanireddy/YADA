@@ -187,4 +187,7 @@ CMakeFiles/diet_assistant.dir/Command.cpp.o: \
  /usr/include/c++/11/bits/fstream.tcc /usr/include/c++/11/stack \
  /usr/include/c++/11/deque /usr/include/c++/11/bits/stl_deque.h \
  /usr/include/c++/11/bits/deque.tcc /usr/include/c++/11/bits/stl_stack.h \
- /home/ameyb/DASS/Assignment3/DASS-Assignment-3/split/FoodDatabase.hpp
+ /home/ameyb/DASS/Assignment3/DASS-Assignment-3/split/FoodDatabase.hpp \
+ /home/ameyb/DASS/Assignment3/DASS-Assignment-3/split/DietProfile.hpp \
+ /home/ameyb/DASS/Assignment3/DASS-Assignment-3/split/common.hpp \
+ /home/ameyb/DASS/Assignment3/DASS-Assignment-3/split/Calculator.hpp

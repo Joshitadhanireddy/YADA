@@ -44,7 +44,106 @@ std::string RemoveFoodCommand::toString() const {
     ss << "Remove " << savedEntry.servings << " serving(s) of " << savedEntry.food->getIdentifier();
     return ss.str();
 }
+SetGenderCommand::SetGenderCommand(DietProfile& p, Gender newG)
+    : profile(p), oldGender(p.getGender()), newGender(newG) {}
 
+void SetGenderCommand::execute() {
+    profile.setGender(newGender);
+}
+
+void SetGenderCommand::undo() {
+    profile.setGender(oldGender);
+}
+
+std::string SetGenderCommand::toString() const {
+    return "Change gender";
+}
+SetHeightCommand::SetHeightCommand(DietProfile& p, double newH)
+    : profile(p), oldHeight(p.getHeight()), newHeight(newH) {}
+
+void SetHeightCommand::execute() {
+    profile.setHeight(newHeight);
+}
+
+void SetHeightCommand::undo() {
+    profile.setHeight(oldHeight);
+}
+
+std::string SetHeightCommand::toString() const {
+    std::stringstream ss;
+    ss << "Change height from " << oldHeight << " to " << newHeight << " cm";
+    return ss.str();
+}
+
+// SetAgeCommand implementation
+SetAgeCommand::SetAgeCommand(DietProfile& p, int newA)
+    : profile(p), oldAge(p.getAge()), newAge(newA) {}
+
+void SetAgeCommand::execute() {
+    profile.setAge(newAge);
+}
+
+void SetAgeCommand::undo() {
+    profile.setAge(oldAge);
+}
+
+std::string SetAgeCommand::toString() const {
+    std::stringstream ss;
+    ss << "Change age from " << oldAge << " to " << newAge;
+    return ss.str();
+}
+
+// SetWeightCommand implementation
+SetWeightCommand::SetWeightCommand(DietProfile& p, const std::string& d, double newW)
+    : profile(p), date(d), oldWeight(p.getWeight(d)), newWeight(newW) {}
+
+void SetWeightCommand::execute() {
+    profile.setWeight(date, newWeight);
+}
+
+void SetWeightCommand::undo() {
+    profile.setWeight(date, oldWeight);
+}
+
+std::string SetWeightCommand::toString() const {
+    std::stringstream ss;
+    ss << "Change weight for " << date << " from " << oldWeight << " to " << newWeight << " kg";
+    return ss.str();
+}
+
+// SetActivityLevelCommand implementation
+SetActivityLevelCommand::SetActivityLevelCommand(DietProfile& p, const std::string& d, ActivityLevel newL)
+    : profile(p), date(d), oldLevel(p.getActivityLevel(d)), newLevel(newL) {}
+
+void SetActivityLevelCommand::execute() {
+    profile.setActivityLevel(date, newLevel);
+}
+
+void SetActivityLevelCommand::undo() {
+    profile.setActivityLevel(date, oldLevel);
+}
+
+std::string SetActivityLevelCommand::toString() const {
+    std::stringstream ss;
+    ss << "Change activity level for " << date;
+    return ss.str();
+}
+
+// SetCalculatorCommand implementation
+SetCalculatorCommand::SetCalculatorCommand(DietProfile& p, std::shared_ptr<TargetCalorieCalculator> newCalc)
+    : profile(p), oldCalculator(p.getCalculator()), newCalculator(newCalc) {}
+
+void SetCalculatorCommand::execute() {
+    profile.setCalculator(newCalculator);
+}
+
+void SetCalculatorCommand::undo() {
+    profile.setCalculator(oldCalculator);
+}
+
+std::string SetCalculatorCommand::toString() const {
+    return "Change calorie calculator";
+}
 // ChangeDateCommand implementation
 ChangeDateCommand::ChangeDateCommand(DailyLog& l, const std::string& newD)
     : log(l), oldDate(l.getCurrentDate()), newDate(newD) {}

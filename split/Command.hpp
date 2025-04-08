@@ -9,6 +9,8 @@
 #include <vector>
 #include <algorithm>
 #include "FoodDatabase.hpp"
+#include "DietProfile.hpp"
+
 // Command pattern for undo functionality
 class Command {
 public:
@@ -74,6 +76,85 @@ class AddFoodToDbCommand : public Command {
         std::string toString() const override;
     };
 // UndoManager class
+class SetGenderCommand : public Command {
+    private:
+    DietProfile& profile;
+    Gender oldGender;
+    Gender newGender;
+    
+    public:
+    SetGenderCommand(DietProfile& p, Gender newG);
+    void execute() override;
+    void undo() override;
+    std::string toString() const override;
+    };
+    
+    class SetHeightCommand : public Command {
+        private:
+        DietProfile& profile;
+        double oldHeight;
+        double newHeight;
+        
+        public:
+        SetHeightCommand(DietProfile& p, double newH);
+        void execute() override;
+        void undo() override;
+        std::string toString() const override;
+    };
+    
+    class SetAgeCommand : public Command {
+        private:
+        DietProfile& profile;
+        int oldAge;
+        int newAge;
+        
+        public:
+        SetAgeCommand(DietProfile& p, int newA);
+        void execute() override;
+        void undo() override;
+        std::string toString() const override;
+    };
+    
+    class SetWeightCommand : public Command {
+    private:
+    DietProfile& profile;
+    std::string date;
+    double oldWeight;
+    double newWeight;
+    
+    public:
+    SetWeightCommand(DietProfile& p, const std::string& d, double newW);
+    void execute() override;
+    void undo() override;
+    std::string toString() const override;
+};
+    
+class SetActivityLevelCommand : public Command {
+    private:
+    DietProfile& profile;
+    std::string date;
+    ActivityLevel oldLevel;
+    ActivityLevel newLevel;
+    
+    public:
+    SetActivityLevelCommand(DietProfile& p, const std::string& d, ActivityLevel newL);
+    void execute() override;
+    void undo() override;
+    std::string toString() const override;
+    };
+    
+    class SetCalculatorCommand : public Command {
+    private:
+    DietProfile& profile;
+    std::shared_ptr<TargetCalorieCalculator> oldCalculator;
+    std::shared_ptr<TargetCalorieCalculator> newCalculator;
+    
+    public:
+    SetCalculatorCommand(DietProfile& p, std::shared_ptr<TargetCalorieCalculator> newCalc);
+    void execute() override;
+    void undo() override;
+    std::string toString() const override;
+};
 class UndoManager {
 private:
     std::stack<std::shared_ptr<Command>> undoStack;
@@ -85,5 +166,4 @@ public:
     std::vector<std::string> getCommandHistory() const;
     void clearHistory();
 };
-
 #endif // COMMAND_HPP
