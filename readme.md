@@ -3,7 +3,7 @@
 This command-line system was created as a DASS (Design and Analysis of Software Systems) Assignment.
 
 ## Authors 
-[@JoshitaDhanireddy](https://github.com/joshita-dhanireddy) & [@AmeyBangera](https://github.com/AmeyBangera)
+[@JoshitaDhanireddy](https://github.com/JoshitaDhanireddy) & [@AmeyBangera](https://github.com/AmeyBangera)
 
 **Note** : A Design.pdf is also present in this repository that explains our design rationale (with a class diagram and sequence diagrams) in the making of the program.
 
